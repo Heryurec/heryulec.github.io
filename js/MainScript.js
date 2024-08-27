@@ -101,23 +101,47 @@ function setMainBackground(){
   getElement('background-image').style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random';
 }
 
-function checkStormMusic(){
-  if(currentCondition.toLowerCase().includes("storm")){
-    music= new Audio("assets/music/storm.wav");
+let music; // Initialize music variable globally to ensure it is accessible throughout the code.
+let jingle = new Audio("assets/music/jingle.wav"); // Assuming you have a jingle to play
+
+function checkStormMusic(currentCondition) {
+  if (currentCondition.toLowerCase().includes("storm")) {
+    music = new Audio("assets/music/storm.wav"); // Initialize music if condition is met
+  } else {
+    // Optional: Handle cases where there is no storm
+    music = new Audio("assets/music/default.wav"); // Fallback music
   }
 }
 
-function startAnimation(){
+function startAnimation(currentCondition) {
   setInitialPositionCurrentPage();
 
-  jingle.play();
-  setTimeout(startMusic, 5000)
-  executeGreetingPage();
+  checkStormMusic(currentCondition); // Check the condition before starting the music
+  jingle.play(); // Play jingle first
+  setTimeout(startMusic, 5000); // Delay to start the storm music
+  executeGreetingPage(); // Continue with the next animation step
 }
 
-function startMusic(){
-  music.play();
+function startMusic() {
+  if (music) {
+    music.play(); // Play music if it's defined
+  } else {
+    console.error("Music is not initialized.");
+  }
 }
+
+// Call the function with the current weather condition (example)
+startAnimation("Stormy Weather"); // Replace with actual condition
+
+// Helper functions (just placeholders, define them as per your use case)
+function setInitialPositionCurrentPage() {
+  // Your logic to set initial positions
+}
+
+function executeGreetingPage() {
+  // Your logic for the greeting page
+}
+
 
 function hideSettings(){
   // Animate settings prompt out
